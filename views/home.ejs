@@ -1,0 +1,25 @@
+<html>
+    <head>
+        <title>Home</title>
+        <script src="/js/home.js"></script>
+    </head>
+    <body>
+        <form method="POST" action="/getAllProblems">
+        <h1>Author</h1>
+        <select multiple id="author" name="author">
+            <% authorTags.forEach(function(tagObj) { %>
+                <option><%= tagObj.tag %> </option>
+                <% }) %>
+        </select>
+
+        <h1>Concepts</h1>
+        <select multiple id="concept" name="concept">
+            <% actualTags.forEach(function(tagObj) { %>
+                <option><%= tagObj.tag %> </option>
+                <% }) %>
+        </select>
+        <h1 id="title"></h1>
+        <button type="submit">Submit</button>
+    </form>
+    </body>
+</html>
