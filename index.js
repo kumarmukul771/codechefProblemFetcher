@@ -1,78 +1,21 @@
-// const Joi = require("joi");
-// Joi.objectId = require("joi-objectid")(Joi);
 const express = require("express");
 const app = express();
 const path = require("path");
-// const config = require("config");
-
-// const cors = require("cors");
 const bodyParser = require("body-parser");
-// const helmet = require("helmet");
 const mongoose = require("mongoose");
-const apiRouter = require("./routes/auth");
-const problem = require("./routes/problem");
+
 const tags = require("./routes/tags");
-const question = require("./models/question");
+const problems = require("./routes/problem")
 
-// if (process.env.NODE_ENV !== "production") {
-// const morgan = require("morgan");
-// app.use(morgan("dev"));
-// require("dotenv").config();
-// }
 
-// app.use(helmet());
-// app.use(helmet.hidePoweredBy());
-// app.use(cors());
 app.set("view engine", "ejs");
 app.use(express.static(path.join(__dirname, "public")));
-// app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended: false}))
-// app.set("trust proxy", 1);
-app.use("/api/problem", problem);
-app.use("/api/tags", tags);
-app.use("/api", apiRouter);
 
-app.post("/getAllProblems", async (req, res) => {
-    // console.log(req.body.tag);
-    // const data = await question.find({
-    //     tags: {
-    //         $all: req.body.tag
-    //     }
-    // })
 
-    // // console.log(data)
-    // res.send(data)
+app.use("/home",tags);
+app.use("/problems",problems)
 
-    let {author, concept} = req.body;
-
-    if (typeof(author) === "string") {
-        author = [author];
-    }
-    if (typeof(concept) === "string") {
-        concept = [concept];
-    }
-
-    if (typeof(author) === "undefined") {
-        author = []
-    }
-    if (typeof(concept) === "undefined") {
-        concept = []
-    }
-
-    let tags = [
-        ...author,
-        ...concept
-    ]
-
-    console.log(tags);
-    const data = await question.find({
-        tags: {
-            $all: tags
-        }
-    })
-
-    res.render("allproblem", {data})
-})
 
 app.post("/addNewTag/:problemId",async(req,res)=>{
   console.log(req.params.problemId,req.body.newTag);
