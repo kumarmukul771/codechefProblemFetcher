@@ -1,6 +1,8 @@
 const express = require("express");
+const question = require("../models/question");
 const router = express.Router();
 const Question = require("../models/question");
+const tag = require("../models/tag");
 const Tag = require("../models/tag");
 // const User = require("../models/user")
 
@@ -159,7 +161,29 @@ router.post("/addNewTag/:problemId", async (req, res, next) => {
     }
 })
 
-// // Get all user defined tags to a given problem for a user
-// router.post("/problem/:problemId/", tagsToProblem);
+router.get("/problem", (req, res) => {
+    res.render("newProblem.ejs")
+})
+
+router.post("/problem/", async (req, res) => {
+    const problemName = req.body.problemName
+    const tags = req.body.tags.split(" ");
+
+    console.log(problemName, tags)
+
+    // res.send("Hii")
+
+    const data = await question.create({author: "aaaaaaaaaa", problemName: problemName, tags: tags});
+
+    const foundTag = await tag.find({tag: "aaaaaaaaaa", type: "author"}); 
+
+    console.log(foundTag, "Here")
+
+    if (! foundTag.length) {
+        const newTag = await tag.create({tag: "aaaaaaaaaa", type: "author"})
+    }
+
+    res.send(data)
+});
 
 module.exports = router;

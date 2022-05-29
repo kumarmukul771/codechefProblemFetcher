@@ -5,7 +5,8 @@ const bodyParser = require("body-parser");
 const mongoose = require("mongoose");
 
 const tags = require("./routes/tags");
-const problems = require("./routes/problem")
+const problems = require("./routes/problem");
+const tag = require("./models/tag");
 
 
 app.set("view engine", "ejs");
@@ -16,7 +17,20 @@ app.use(bodyParser.urlencoded({extended: false}))
 app.use("/home",tags);
 app.use("/problems",problems)
 
+app.get("/searchTag",async (req,res)=>{
+    const value = req.query.value
+    const data = await tag.find({
+        tag: {
+            $regex: value,
+            $options: "$i"
+        }
+    }, {
+        _id: 0,
+        tag: 1
+    }).limit(10);
 
+    res.send(data)
+})
 app.post("/addNewTag/:problemId",async(req,res)=>{
   console.log(req.params.problemId,req.body.newTag);
   res.send("Hii")

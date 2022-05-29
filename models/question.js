@@ -8,36 +8,35 @@ const ProblemSchema = mongoose.Schema({
   },
   body: {
     type: String,
-    required: true,
   },
   challengeType: {
     type: String,
-    required: true,
+    // required: true,
   },
   dateAdded: {
     type: String,
-    required: true,
+    // required: true,
   },
   languagesSupported: {
     type: Array,
-    required: true,
+    // required: true,
   },
   maxTimeLimit: {
     type: String,
-    required: true,
+    // required: true,
   },
   problemCode: {
     type: String,
-    required: true,
+    // required: true,
     unique: true,
   },
   partialSubmissions: {
     type: String,
-    required: true,
+    // required: true,
   },
   sourceSizeLimit: {
     type: String,
-    required: true,
+    // required: true,
   },
   tags: {
     type: Array,
@@ -57,7 +56,7 @@ const ProblemSchema = mongoose.Schema({
   ],
   totalSubmissions: {
     type: String,
-    required: true,
+    // required: true,
   },
   problemName: {
     type: String,
@@ -65,11 +64,11 @@ const ProblemSchema = mongoose.Schema({
   },
   successfulSubmissions: {
     type: String,
-    required: true,
+    // required: true,
   },
   accuracy: {
     type: String,
-    required: true,
+    // required: true,
   },
 });
 

@@ -1,4 +1,5 @@
 const express = require("express");
+const question = require("../models/question");
 const Tag = require("../models/tag");
 const User = require("../models/User");
 const router = express.Router();
@@ -30,7 +31,7 @@ router.get("/", async (req, res, next) => {
         });
 
 
-        if(data){
+        if (data) {
             userDefinedTags = data.tags
         }
 
@@ -42,7 +43,19 @@ router.get("/", async (req, res, next) => {
     }
 });
 
-// Get all user defined tags for a given user
-// router.get("/userDefinedTags", async (req, res) => {});
+// Get all user defined tags for a given problem
+router.get("/userDefinedTags/:problemId", async (req, res) => {
+    // res.send("hi");
+    const userId = "5fbea60fb1160b2be07711ca";
+    const problem = await question.findById(req.params.problemId);
+    
+    let val = problem.userDefinedTags.find(obj => obj.user_id == userId);
+
+    if (val === undefined) {
+        res.send("No tags found")
+    } else {
+        res.send({data: val.tags})
+    } 
+});
 
 module.exports = router;
